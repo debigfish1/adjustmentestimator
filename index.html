@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Settlement Calculator with Dynamic Payment Adjustment</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">Easy Settlement Estimater</div>
+    <div class="container">
+        <div class="section">
+            <div><label for="settlementDate">Settlement Date:</label></div>
+            <div><input type="date" id="settlementDate" class="settlementDate"></div>   
+            <div><label for="adjustmentamount">Adjustment amount:</label></div>
+            <div><input type="number" id="adjustmentamount" class="adjustmentamount currency-input"></div>
+        </div>
+        <div class="section">
+            <div><label for="adjustmentstart">Adjustment start date:</label></div>
+            <div><input type="date" id="adjustmentstart" class="adjustmentstart"></div>
+            <div><label for="adjustmentend">Adjustment end date:</label></div>
+            <div><input type="date" id="adjustmentend" class="adjustmentend"></div>
+        </div>
+        <div class="section">
+            <label for="my-toggle">Has the amount already been paid?</label>
+            <input type="checkbox" id="my-toggle">
+        </div>
+    </div>
+    
+    <div class="button-container">
+        <button onclick="calculate()">Calculate</button>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <div><label for="purchaserPortion">Purchaser Portion:</label></div>
+            <div><input id="purchaserPortion" class="purchaserPortion currency-input" readonly></div>
+            <div><label for="vendorPortion">Vendor Portion:</label></div>
+            <div><input id="vendorPortion" class="vendorPortion currency-input" readonly></div>
+        </div>
+        <div id="adjustmentMessage"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            const adjustmentAmount = parseFloat(document.getElementById('adjustmentamount').value);
+            const adjustmentStartDate = document.getElementById('adjustmentstart').value;
+            const adjustmentEndDate = document.getElementById('adjustmentend').value;
+            const settlementDate = document.getElementById('settlementDate').value;
+            const isAmountPaid = document.getElementById('my-toggle').checked;
+
+            if (!adjustmentStartDate || !adjustmentEndDate || !settlementDate) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            function calculateDaysBetween(d1, d2) {
+                const date1 = new Date(d1);
+                const date2 = new Date(d2);
+                const timeDiff = date2 - date1;
+                return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+            }
+
+            const totalDays = calculateDaysBetween(adjustmentStartDate, adjustmentEndDate);
+            const vendorDays = calculateDaysBetween(adjustmentStartDate, settlementDate);
+            const purchaserDays = totalDays - vendorDays;
+
+            const vendorPortion = (adjustmentAmount / totalDays) * vendorDays;
+            const purchaserPortion = (adjustmentAmount / totalDays) * purchaserDays;
+
+            document.getElementById('purchaserPortion').value = purchaserPortion.toFixed(2);
+            document.getElementById('vendorPortion').value = vendorPortion.toFixed(2);
+
+            const adjustmentMessage = document.getElementById('adjustmentMessage');
+            if (isAmountPaid) {
+                adjustmentMessage.textContent = `The purchase price should be adjusted by $${vendorPortion.toFixed(2)} in the vendor's favour.`;
+            } else {
+                adjustmentMessage.textContent = `The purchase price should be adjusted by $${purchaserPortion.toFixed(2)} in the purchaser's favour.`;
+            }
+        }
+    </script>
+</body>
+</html>
