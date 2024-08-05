@@ -97,6 +97,28 @@ input[type="number"] {
     overflow: hidden; /* Prevents content overflow */
 }
 
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.yes-button {
+    background-color: #4CAF50;
+    color: white;
+}
+.no-button {
+    background-color: #FF5733;
+    color: white;
+}
+
+
+
+
+
 button { 
     background-color: var(--mid-blue); 
     color: white; 
@@ -153,4 +175,38 @@ button:hover {
     height: auto; /* Maintain aspect ratio */
     display: block;
     margin: 20px 0;
+}
+
+.payment-status {
+    display: flex;
+    align-items: center;
+}
+
+.payment-status-label {
+    margin-right: 20px;
+    margin-left: 500px;
+    align-items: left;
+}
+
+.payment-status input[type="radio"] {
+    margin-right: 5px;
+    display: flex;
+    align-items: left;
+    align-items: baseline;
+    padding: 1000px;
+}
+.radio {
+    margin-right: 5px;
+    display: flex;
+    align-items: left;
+    align-items: baseline;
+    padding: 1000px; 
+}
+.payment-status-section {
+    display: flex; 
+    margin-bottom: 20px; 
+    align-items: baseline;
+    justify-content: space-between;
+    max-width: 40%;
+    
 }

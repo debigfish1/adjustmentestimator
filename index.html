@@ -29,9 +29,14 @@
             <div><label for="adjustmentend">Adjustment end date:</label></div>
             <div><input type="date" id="adjustmentend" class="adjustmentend"></div>
         </div>
-        <div class="section">
-            <label for="my-toggle">Has the amount already been paid?</label>
-            <input type="checkbox" id="my-toggle">
+        <div class="payment-status-section">
+            <label for="payment-status">Has the amount already been paid?</label>
+           
+                <input type="radio" id="yes" name="paid-status" value="yes">
+                <label type ="payment-status-label" for="yes">Yes</label>
+                <input type="radio" id="no" name="paid-status" value="no">
+                <label type ="payment-status-label"for="no">No</label>
+                  
         </div>
     </div>
     
